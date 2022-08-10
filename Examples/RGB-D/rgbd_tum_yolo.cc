@@ -34,7 +34,7 @@ void LoadImages(const string &strAssociationFilename, vector<string> &vstrImageF
 
 int main(int argc, char **argv)
 {
-    if(argc != 5 && argc != 6 )//&& argc != 7
+    if(argc != 5 && argc != 6 )
     {
         cerr << endl << "Usage: ./rgbd_tum path_to_vocabulary path_to_settings path_to_sequence path_to_association (path_to_masks) (path_to_output)" << endl;
         return 1;
@@ -63,8 +63,7 @@ int main(int argc, char **argv)
         return 1;
     }
     
-    // Initialize Mask R-CNN
-    //DynaSLAM::SegmentDynObject *MaskNet;
+    // Initialize YOLOv3
     yolov3::yolov3Segment* yolo;
     if (argc==6)// || argc==7
     {
@@ -89,18 +88,6 @@ int main(int argc, char **argv)
     cv::Mat kernel = getStructuringElement(cv::MORPH_ELLIPSE,
                                            cv::Size( 2*dilation_size + 1, 2*dilation_size+1 ),
                                            cv::Point( dilation_size, dilation_size ) );
-
-//     if (argc==7)
-//     {
-//         std::string dir = string(argv[6]);
-//         mkdir(dir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-//         dir = string(argv[6]) + "/rgb/";
-//         mkdir(dir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-//         dir = string(argv[6]) + "/depth/";
-//         mkdir(dir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-//         dir = string(argv[6]) + "/mask/";
-//         mkdir(dir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-//     }
 
     // Main loop
     cv::Mat imRGB, imD;
